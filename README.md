@@ -10,7 +10,11 @@ However, the API provided by IMDb is unofficial and undocumented so I don't know
 
 The workflow uses one single command.
 
-- **m [query]** Looks up a movie, TV series or actor matching the query. If a movie or TV series is selected, detailed information will be loaded from OMDb and shown. The detailed information includes the option for watching plot summary and a poster in quick look, view a list of actors in Alfred and view a trailer on YouTube. If an actor is selected, the corresponding IMDb website will be opened.
+- **m [query]** Looks up a movie, TV series or actor matching the query.
+
+If a movie or TV series is selected, detailed information will be loaded from OMDb and shown. The detailed information includes the option for watching plot summary and a poster in quick look, view a list of actors in Alfred and view a trailer on YouTube.
+
+If an actor is selected, the corresponding IMDb website will be opened.
 
 About
 ===
