@@ -4,7 +4,9 @@ A workflow for Alfred 2.0 which lets you quickly lookup movies and actors on IMD
 
 ![](http://f.cl.ly/items/3W2E0W2S2I3o0H0j3r0l/alfred-movies-workflow.png)
 
-The workflow [this workflow](http://cl.ly/2G2g0D2C1942) written by Robert Hovath. However, I wanted to be able to search for actors so I decided to create a workflow which focuses on the IMDbs undocumented API. I ended up retrieving information for a specific movie from OMDb. This allows for viewing information for a movie or TV series directly in Alfred.
+The workflow is inspired by this workflow written by Robert Hovath. While the workflow developed by Hovath is great, I wanted to be able to search for actors and therefore I decided to create a workflow which pulls its information from IMDbs API.
+
+However, the API provided by IMDb is unofficial and undocumented so I don't know of any way to pull detailed information from them, so I ended up retrieving information for a specific movie from OMDb.
 
 The workflow uses one single command.
 
