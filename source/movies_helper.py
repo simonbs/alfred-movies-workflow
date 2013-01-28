@@ -67,9 +67,9 @@ def display_movie_info(the_id):
   if "Released" in movie:
     feedback.add_item(movie["Released"], "Release date", "", "no", the_id, "images/release_date.png")
   if "Director" in movie and movie["Director"] != "" and movie["Director"] != "N/A":
-    feedback.add_item(movie["Director"], "Director", "", "no", the_id, "images/director.png")
+    feedback.add_item(movie["Director"], "Director", json_args({ "command": "lucky_imdb", "query": movie["Director"] }), "yes", "", "images/director.png")
   if "Writer" in movie and movie["Writer"] != "" and movie["Writer"] != "N/A":
-    feedback.add_item(movie["Writer"], "Writer", "", "no", the_id, "images/writer.png")
+    feedback.add_item(movie["Writer"], "Writer", json_args({ "command": "lucky_imdb", "query": movie["Writer"] }), "yes", "", "images/writer.png")
   if "Actors" in movie:
     feedback.add_item("Show actors...", movie["Actors"], "", "no", ("%s actors" % (the_id)), "images/actors.png")
   if "Plot" in movie and movie["Plot"] != "" and movie["Plot"] != "N/A":
