@@ -19,12 +19,12 @@ def action(query):
   elif args["command"] == "lucky_imdb":
     open_url(("http://www.google.com/search?btnI=I'm+Feeling+Lucky&q=site:imdb.com %s" % args["query"]))
   elif args["command"] == "quicklook_text":
-    command = "echo \"%s\" > plot.txt | qlmanage -p plot.txt" % (args["text"])
+    command = "echo \"%s\" > plot.txt; qlmanage -p plot.txt" % (args["text"])
     run_command(command)
   elif args["command"] == "trailer":
     open_url(("http://www.google.com/search?btnI=I'm+Feeling+Lucky&q=site:youtube.com %s" % args["query"]))
   elif args["command"] == "quicklook_poster":
-    command = "curl \"%s\" > poster.jpg | qlmanage -p poster.jpg" % (args["url"])
+    command = "curl \"%s\" > poster.jpg; qlmanage -p poster.jpg" % (args["url"])
     run_command(command)
     
 def helper(query):
