@@ -4,9 +4,11 @@ import webbrowser
 import re
 import json
 import os
+import htmlentitydefs
 from MLStripper import MLStripper
 from Feedback import Feedback
 
+# Performs an action
 def action(query):
   args = json.loads(query.replace("'", "\""))
   print args
@@ -27,6 +29,7 @@ def action(query):
     command = "curl \"%s\" > poster.jpg; qlmanage -p poster.jpg" % (args["url"])
     run_command(command)
     
+# Helper method, initially called from Alfred
 def helper(query):
   id_regex = re.compile("^tt[0-9]{7}")
   id_matches = id_regex.match(query)
@@ -39,6 +42,7 @@ def helper(query):
   else:
     return display_search_results(query)
   
+# Returns search results as feedback for Alfred
 def display_search_results(query):
   feedback = Feedback()
   results = imdb.search(query)
@@ -48,6 +52,7 @@ def display_search_results(query):
   # feedback = add_to_feedback(feedback, results, "approx")
   return feedback
 
+# Returns movie as feedback for Alfred
 def display_movie_info(the_id):
   feedback = Feedback()
   movie = omdb.get_movie(the_id)
@@ -83,6 +88,7 @@ def display_movie_info(the_id):
   feedback.add_item("Show on IMDb...", "", title_args, "yes", "", "images/imdb.png")
   return feedback
   
+# Returns actors as feedback for Alfred
 def display_actors(the_id):
   feedback = Feedback()
   movie = omdb.get_movie(the_id)
@@ -106,10 +112,10 @@ def add_to_feedback(feedback, results, key):
   name_key = "name_%s" % (key)
   if title_key in results:
     for result in results[title_key]:
-      feedback.add_item(result["title"], strip_tags(result["title_description"]).replace("  ", ""), "", "no", result["id"])
+      feedback.add_item(unescape(result["title"]), strip_tags(unescape(result["title_description"])).replace("  ", ""), "", "no", result["id"])
   if name_key in results:
     for result in results[name_key]:
-      feedback.add_item(result["name"], "", json_args({ "command": "imdb_actor", "id": result["id"] }), "yes", "", "images/imdb.png")
+      feedback.add_item(unescape(result["name"]), "", json_args({ "command": "imdb_actor", "id": result["id"] }), "yes", "", "images/imdb.png")
   return feedback
 
 # Strip tags from a string containing HTML tags.
@@ -132,3 +138,25 @@ def json_args(args):
 # Runs a command in the bash
 def run_command(cmd):
   os.system(cmd)
+  
+# Unescapes HTML entities
+def unescape(text):
+    def fixup(m):
+        text = m.group(0)
+        if text[:2] == "&#":
+            # character reference
+            try:
+                if text[:3] == "&#x":
+                    return unichr(int(text[3:-1], 16))
+                else:
+                    return unichr(int(text[2:-1]))
+            except ValueError:
+                pass
+        else:
+            # named entity
+            try:
+                text = unichr(htmlentitydefs.name2codepoint[text[1:-1]])
+            except KeyError:
+                pass
+        return text # leave as is
+    return re.sub("&#?\w+;", fixup, text)
